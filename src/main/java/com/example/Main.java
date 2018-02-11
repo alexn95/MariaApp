@@ -60,7 +60,7 @@ public class Main {
         return "index";
     }
 
-    @RequestMapping(path = "/order", method = RequestMethod.POST)
+    @RequestMapping(path = "/", method = RequestMethod.POST)
     String order(Map<String, Object> model, @ModelAttribute String recipient_surname, String recipient_name, String recipient_phone, String recipient_note) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
