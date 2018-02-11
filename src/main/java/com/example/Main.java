@@ -64,7 +64,7 @@ public class Main {
     String order(Map<String, Object> model, @ModelAttribute String recipient_surname, String recipient_name, String recipient_phone, String recipient_note) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, create_date) VALUES ('" +
+            stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, createtimee) VALUES ('" +
                      recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
                     recipient_note + "', now())");
 
