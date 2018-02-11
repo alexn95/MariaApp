@@ -87,29 +87,31 @@
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <form action="/order" method="post">
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Фамилия:</label>
-              <input type="text" class="form-control" id="recipient-surname">
+              <label for="recipient_surname" class="col-form-label">Фамилия:</label>
+              <input type="text" class="form-control" id="recipient_surname" name="recipient_surname">
             </div>
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Имя:</label>
-              <input type="text" class="form-control" id="recipient-name">
+              <label for="recipient_name" class="col-form-label">Имя:</label>
+              <input type="text" class="form-control" id="recipient_name" name="recipient_name">
             </div>
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Телефон:</label>
-              <input type="text" class="form-control" id="recipient-phone">
+              <label for="recipient_name" class="col-form-label">Телефон:</label>
+              <input type="text" class="form-control" id="recipient_phone" name="recipient_phone">
             </div>
             <div class="form-group">
-              <label for="recipient-note" class="col-form-label">Примечание:</label>
-              <textarea class="form-control" id="recipient-note"></textarea>
+              <label for="recipient_note" class="col-form-label">Примечание:</label>
+              <textarea class="form-control" id="recipient_note" name="recipient_note"></textarea>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+              <button type="submit" class="btn btn-primary">Заказать</button>
             </div>
           </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-          <button type="button" class="btn btn-primary">Заказать</button>
-        </div>
+
       </div>
     </div>
   </div>

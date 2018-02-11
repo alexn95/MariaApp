@@ -24,6 +24,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.sql.DataSource;
@@ -38,6 +39,7 @@ import static javax.measure.unit.SI.KILOGRAM;
 import javax.measure.quantity.Mass;
 import org.jscience.physics.model.RelativisticModel;
 import org.jscience.physics.amount.Amount;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @SpringBootApplication
@@ -58,6 +60,20 @@ public class Main {
         return "index";
     }
 
+    @RequestMapping(path = "/order", method = RequestMethod.POST)
+    String order(@ModelAttribute String recipient_surname, String recipient_name, String recipient_phone, String recipient_note) {
+        try (Connection connection = dataSource.getConnection()) {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, create_date) VALUES ('" +
+                     recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
+                    recipient_note + "', now())");
+
+            return "index";
+        } catch (Exception e) {
+            return "error";
+        }
+
+    }
 
     @RequestMapping("/db")
     String db(Map<String, Object> model) {
