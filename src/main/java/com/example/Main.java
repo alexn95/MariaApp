@@ -24,8 +24,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -37,9 +36,10 @@ import java.util.Map;
 
 import static javax.measure.unit.SI.KILOGRAM;
 import javax.measure.quantity.Mass;
+import javax.xml.ws.Response;
+
 import org.jscience.physics.model.RelativisticModel;
 import org.jscience.physics.amount.Amount;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @SpringBootApplication
@@ -60,20 +60,33 @@ public class Main {
         return "index";
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.POST)
-    String order(Map<String, Object> model, String recipient_surname, String recipient_name, String recipient_phone, String recipient_note) {
-        try (Connection connection = dataSource.getConnection()) {
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, createtime) VALUES ('" +
-                     recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
-                    recipient_note + "', now())");
+//    @RequestMapping(path = "/", method = RequestMethod.POST)
+//    String order(Map<String, Object> model, String recipient_surname, String recipient_name, String recipient_phone, String recipient_note) {
+//        try (Connection connection = dataSource.getConnection()) {
+//            Statement stmt = connection.createStatement();
+//            stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, createtime) VALUES ('" +
+//                     recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
+//                    recipient_note + "', now())");
+//
+//            return "index";
+//        } catch (Exception e) {
+//            model.put("message", e.getMessage());
+//            return "error";
+//        }
+//
+//    }
 
-            return "index";
-        } catch (Exception e) {
-            model.put("message", e.getMessage());
-            return "error";
+    @RequestMapping(value = "/getCharNum", method = RequestMethod.GET)
+    public @ResponseBody Response getCharNum(@RequestParam String text) {
+
+        Response result = 
+
+        if (text != null) {
+            result.setText(text);
+            result.setCount(text.length());
         }
 
+        return result;
     }
 
     @RequestMapping("/db")
