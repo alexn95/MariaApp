@@ -75,6 +75,7 @@ public class Main {
                      recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
                     recipient_note + false + "', now())");
             model.addObject("SUCCESS");
+            model.setViewName("index1");
             return model;
         } catch (Exception e) {
             model.addObject(e);
