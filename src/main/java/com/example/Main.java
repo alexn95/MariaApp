@@ -58,7 +58,7 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
-    @RequestMapping("/")
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index() {
         return "index";
     }
