@@ -58,13 +58,13 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
-    @RequestMapping(path = "/order", method = RequestMethod.GET)
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index() {
         return "index";
     }
 
     @ResponseBody
-    @RequestMapping(path = "/order", method = RequestMethod.POST)
+    @RequestMapping(path = "/", method = RequestMethod.POST)
     public ModelAndView order(ModelAndView model,
                  @RequestParam(value = "surname")String recipient_surname,
                  @RequestParam(value = "name")String recipient_name,
