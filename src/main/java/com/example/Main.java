@@ -101,13 +101,13 @@ public class Main {
         }
     }
 
-    @RequestMapping("/test")
+    @RequestMapping("/testGet")
     String testGet() {
         return "test";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    @RequestMapping(value = "/testPost", method = RequestMethod.POST)
     public ModelAndView testPost(ModelAndView model,
                                   @RequestParam(value = "param1")String param){
         model = new ModelAndView(new MappingJackson2JsonView());
