@@ -64,7 +64,7 @@ public class Main {
     }
 
     @ResponseBody
-    @RequestMapping(path = "/", method = RequestMethod.POST)
+    @RequestMapping(path = "/order", method = RequestMethod.POST)
     public ModelAndView order(ModelAndView model,
                  @RequestParam(value = "surname")String recipient_surname,
                  @RequestParam(value = "name")String recipient_name,
