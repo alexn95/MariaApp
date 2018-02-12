@@ -64,7 +64,7 @@ public class Main {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    String order(ModelAndView model,
+    ModelAndView order(ModelAndView model,
                  @RequestParam(value = "surname")String recipient_surname,
                  @RequestParam(value = "name")String recipient_name,
                  @RequestParam(value = "phone")String recipient_phone,
@@ -74,10 +74,12 @@ public class Main {
             stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, createtime) VALUES ('" +
                      recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
                     recipient_note + "', now())");
-            return "index";
+            model = new ModelAndView(new MappingJackson2JsonView());
+            model.addObject("result", "success");
+            return model;
         } catch (Exception e) {
             model.addObject(e);
-            return "error";
+            return model;
         }
     }
 
