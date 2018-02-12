@@ -751,24 +751,7 @@
     <script src="js/agency.min.js"></script>
 
     <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>-->
-    <script>
-       $(document).ready(function () {
-           $('#make_order').click(function () {
-               var surname = $('#recipient_surname').val();
-               var name = $('#recipient_name').val();
-               var phone = $('#recipient_phone').val();
-               var note = $('#recipient_note').val();
-               $.ajax({
-                   type:"POST",
-                   data:{surname, name, phone, note},
-                   url:"",
-                   success: function(data){
-                       console.log(data);
-                   }
-               });
-           });
-        });
-</script>
+    <script src="js/ajax_order.js"></script>
 
   </body>
 
