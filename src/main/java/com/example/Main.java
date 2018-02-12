@@ -103,7 +103,7 @@ public class Main {
 
     @RequestMapping("/test")
     String testGet() {
-        return "/test";
+        return "test";
     }
 
     @ResponseBody
@@ -113,7 +113,7 @@ public class Main {
         model = new ModelAndView(new MappingJackson2JsonView());
         model.addObject("attr1", param);
         model.addObject("attr2", "hello");
-        model.setViewName("/test");
+        model.setViewName("test");
         return model;
     }
 
