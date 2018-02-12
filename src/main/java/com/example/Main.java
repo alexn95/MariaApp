@@ -102,7 +102,7 @@ public class Main {
                 order += ", ";
                 order += rs.getString("note");
                 order += ", ";
-                order += rs.getTimestamp("createdate");
+                order += rs.getTimestamp("createtime");
                 output.add("Orders: " + order);
             }
 
