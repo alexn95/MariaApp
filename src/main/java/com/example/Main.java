@@ -61,7 +61,7 @@ public class Main {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    String order(Map<String, Object> model, @ModelAttribute String recipient_surname, String recipient_name, String recipient_phone, String recipient_note) {
+    String order(Map<String, Object> model, String recipient_surname, String recipient_name, String recipient_phone, String recipient_note) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, createtime) VALUES ('" +
