@@ -24,6 +24,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
@@ -40,6 +41,8 @@ import javax.xml.ws.Response;
 
 import org.jscience.physics.model.RelativisticModel;
 import org.jscience.physics.amount.Amount;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @Controller
 @SpringBootApplication
@@ -77,7 +80,6 @@ public class Main {
     }
 
 
-
     @RequestMapping("/db")
     String db(Map<String, Object> model) {
         try (Connection connection = dataSource.getConnection()) {
@@ -97,6 +99,17 @@ public class Main {
             model.put("message", e.getMessage());
             return "error";
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public ModelAndView mvcmethod(ModelAndView model,
+                                  @RequestParam(value = "param1")String param){
+        model = new ModelAndView(new MappingJackson2JsonView());
+        model.addObject("attr1", param);
+        model.addObject("attr2", "hello");
+        model.setViewName("/test");
+        return model;
     }
 
 
