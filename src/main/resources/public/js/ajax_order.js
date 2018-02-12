@@ -1,34 +1,16 @@
-jQuery(document).ready(function($) {
-	$("#search-form").submit(function(event) {
-
-		// Prevent the form from submitting via the browser.
-		event.preventDefault();
-		searchViaAjax();
-
-	});
-});
-
-function searchAjax() {
-	var data = {}
-	data["query"] = $("#query").val();
-
-	$.ajax({
-		type : "POST",
-		contentType : "application/json",
-		url : "${home}search/api/getSearchResult",
-		data : JSON.stringify(data),
-		dataType : 'json',
-		timeout : 100000,
-		success : function(data) {
-			console.log("SUCCESS: ", data);
-			display(data);
-		},
-		error : function(e) {
-			console.log("ERROR: ", e);
-			display(e);
-		},
-		done : function(e) {
-			console.log("DONE");
-		}
-	});
-}
+$(document).ready(function () {
+           $('#make_order').click(function () {
+               var surname = $('#recipient_surname').val();
+               var name = $('#recipient_name').val();
+               var phone = $('#recipient_phone').val();
+               var note = $('#recipient_note').val();
+               $.ajax({
+                   type:"POST",
+                   data:{surname, name, phone, note},
+                   url:"/",
+                   success: function(data){
+                       console.log(data);
+                   }
+               });
+           });
+        });

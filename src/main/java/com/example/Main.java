@@ -64,19 +64,22 @@ public class Main {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    String order(Map<String, Object> model, String recipient_surname, String recipient_name, String recipient_phone, String recipient_note) {
+    ModelAndView order(ModelAndView model,
+                 @RequestParam(value = "surname")String recipient_surname,
+                 @RequestParam(value = "name")String recipient_name,
+                 @RequestParam(value = "phone")String recipient_phone,
+                 @RequestParam(value = "note")String recipient_note) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, createtime) VALUES ('" +
                      recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
                     recipient_note + "', now())");
-
-            return "index";
+            model.addObject("SUCCESS");
+            return model;
         } catch (Exception e) {
-            model.put("message", e.getMessage());
-            return "error";
+            model.addObject(e);
+            return model;
         }
-
     }
 
 

@@ -17,19 +17,7 @@
 </body>
 
 <script>
-        $(document).ready(function () {
-           $('#butt1').click(function () {
-               var par1=$('#inp1').val();
-               $.ajax({
-                   type:"POST",//тип запроса
-                   data:{param1:par1},//параметры запроса
-                   url:"test",//url адрес обработчика
-                   success: function(data){
-                       console.log(data);
-                   }
-               });
-           });
-        });
+
 
 </script>
 </html>
