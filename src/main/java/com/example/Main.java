@@ -76,7 +76,7 @@ public class Main {
                      recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
                     recipient_note + false + "', now())");
             model = new ModelAndView(new MappingJackson2JsonView());
-            model.addObject("SUCCESS");
+            model.addObject("result","success");
             return model;
         } catch (Exception e) {
             model.addObject(e);
