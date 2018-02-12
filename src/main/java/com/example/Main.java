@@ -58,29 +58,26 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public String index() {
+    @RequestMapping("/")
+    String index() {
         return "index";
     }
 
-    @ResponseBody
-    @RequestMapping(path = "", method = RequestMethod.POST)
-    public ModelAndView order(ModelAndView model,
+    @RequestMapping(path = "/", method = RequestMethod.POST)
+    String order(ModelAndView model,
                  @RequestParam(value = "surname")String recipient_surname,
                  @RequestParam(value = "name")String recipient_name,
                  @RequestParam(value = "phone")String recipient_phone,
                  @RequestParam(value = "note")String recipient_note) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, complete, createtime) VALUES ('" +
+            stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, createtime) VALUES ('" +
                      recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
-                    recipient_note + false + "', now())");
-            model = new ModelAndView(new MappingJackson2JsonView());
-            model.addObject("result","success");
-            return model;
+                    recipient_note + "', now())");
+            return "index";
         } catch (Exception e) {
             model.addObject(e);
-            return model;
+            return "error";
         }
     }
 
@@ -106,20 +103,20 @@ public class Main {
         }
     }
 
-//    @RequestMapping(value = "/test", method = RequestMethod.GET)
-//    String testGet() {
-//        return "test";
-//    }
-//
-//    @ResponseBody
-//    @RequestMapping(value = "/test", method = RequestMethod.POST)
-//    public ModelAndView testPost(ModelAndView model,
-//                                  @RequestParam(value = "param1")String param){
-//        model = new ModelAndView(new MappingJackson2JsonView());
-//        model.addObject("attr1", param);
-//        model.addObject("attr2", "hello");
-//        return model;
-//    }
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    String testGet() {
+        return "test";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public ModelAndView testPost(ModelAndView model,
+                                  @RequestParam(value = "param1")String param){
+        model = new ModelAndView(new MappingJackson2JsonView());
+        model.addObject("attr1", param);
+        model.addObject("attr2", "hello");
+        return model;
+    }
 
 
     @Bean
