@@ -7,7 +7,7 @@ $(document).ready(function () {
                $.ajax({
                    type:"POST",
                    data:{surname, name, phone, note},
-                   url:"",
+                   url:"test",
                    success: function(data){
                        console.log(data);
                    }

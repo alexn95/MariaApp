@@ -63,7 +63,8 @@ public class Main {
         return "index";
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.POST)
+    @ResponseBody
+    @RequestMapping(path = "/test", method = RequestMethod.POST)
     public ModelAndView order(ModelAndView model,
                  @RequestParam(value = "surname")String recipient_surname,
                  @RequestParam(value = "name")String recipient_name,
