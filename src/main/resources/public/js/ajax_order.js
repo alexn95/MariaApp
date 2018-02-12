@@ -10,7 +10,7 @@ $(document).ready(function () {
                    url:"",
                    success: function(data){
                        console.log(data);
-                       $('#order_close').click;
+                       $('#orderModal').modal("hide");
                    }
                });
            });
