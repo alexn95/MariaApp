@@ -64,7 +64,7 @@ public class Main {
     }
 
     @ResponseBody
-    @RequestMapping(path = "/test", method = RequestMethod.POST)
+    @RequestMapping(path = "/", method = RequestMethod.POST)
     public ModelAndView order(ModelAndView model,
                  @RequestParam(value = "surname")String recipient_surname,
                  @RequestParam(value = "name")String recipient_name,
@@ -105,20 +105,20 @@ public class Main {
         }
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    String testGet() {
-        return "test";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public ModelAndView testPost(ModelAndView model,
-                                  @RequestParam(value = "param1")String param){
-        model = new ModelAndView(new MappingJackson2JsonView());
-        model.addObject("attr1", param);
-        model.addObject("attr2", "hello");
-        return model;
-    }
+//    @RequestMapping(value = "/test", method = RequestMethod.GET)
+//    String testGet() {
+//        return "test";
+//    }
+//
+//    @ResponseBody
+//    @RequestMapping(value = "/test", method = RequestMethod.POST)
+//    public ModelAndView testPost(ModelAndView model,
+//                                  @RequestParam(value = "param1")String param){
+//        model = new ModelAndView(new MappingJackson2JsonView());
+//        model.addObject("attr1", param);
+//        model.addObject("attr2", "hello");
+//        return model;
+//    }
 
 
     @Bean
