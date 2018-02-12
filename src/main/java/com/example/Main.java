@@ -101,7 +101,7 @@ public class Main {
         }
     }
 
-    @RequestMapping("/testGet")
+    @RequestMapping(value = "/testGet", method = RequestMethod.GET)
     String testGet() {
         return "test";
     }
