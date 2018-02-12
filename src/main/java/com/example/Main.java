@@ -113,7 +113,6 @@ public class Main {
         model = new ModelAndView(new MappingJackson2JsonView());
         model.addObject("attr1", param);
         model.addObject("attr2", "hello");
-        model.setViewName("test");
         return model;
     }
 
