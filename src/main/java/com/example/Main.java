@@ -59,12 +59,12 @@ public class Main {
     }
 
     @RequestMapping("/")
-    String index() {
+    public String index() {
         return "index";
     }
 
-    @RequestMapping(path = "/order", method = RequestMethod.POST)
-    ModelAndView order(ModelAndView model,
+    @RequestMapping(path = "/", method = RequestMethod.POST)
+    public ModelAndView order(ModelAndView model,
                  @RequestParam(value = "surname")String recipient_surname,
                  @RequestParam(value = "name")String recipient_name,
                  @RequestParam(value = "phone")String recipient_phone,
@@ -75,7 +75,6 @@ public class Main {
                      recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
                     recipient_note + false + "', now())");
             model.addObject("SUCCESS");
-//            model.setViewName("index");
             return model;
         } catch (Exception e) {
             model.addObject(e);
