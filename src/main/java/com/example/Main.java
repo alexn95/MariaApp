@@ -103,7 +103,7 @@ public class Main {
                 order += rs.getString("note");
                 order += ", ";
                 order += rs.getTimestamp("createtime");
-                output.add("Orders: " + order);
+                output.add("Заказ: " + order);
             }
 
             model.put("records", output);
