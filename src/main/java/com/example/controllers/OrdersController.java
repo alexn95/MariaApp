@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -13,17 +14,15 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/db")
+@RequestMapping("/orders")
 public class OrdersController {
 
     @Autowired
     private DataSource dataSource;
 
-    String db(Map<String, Object> model) {
+    public ModelAndView db(ModelAndView modelAndView) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
-//            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-//            stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
             ResultSet rs = stmt.executeQuery("SELECT * FROM orders");
 
             ArrayList<String> output = new ArrayList<String>();
@@ -39,12 +38,13 @@ public class OrdersController {
                 order += rs.getTimestamp("createtime");
                 output.add("Заказ: " + order);
             }
-
-            model.put("records", output);
-            return "db";
+            modelAndView = new ModelAndView();
+            modelAndView.addObject("records", output);
+            modelAndView.setViewName("db");
+            return modelAndView;
         } catch (Exception e) {
-            model.put("message", e.getMessage());
-            return "error";
+            modelAndView.addObject("message", e.getMessage());
+            return modelAndView;
         }
     }
 }
