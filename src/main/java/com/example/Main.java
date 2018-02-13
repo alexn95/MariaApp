@@ -23,8 +23,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2SsoDefaultConfiguration;
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2SsoProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +71,28 @@ public class Main {
             HikariConfig config = new HikariConfig();
             config.setJdbcUrl(dbUrl);
             return new HikariDataSource(config);
+        }
+    }
+
+    @Configuration
+    @EnableOAuth2Sso
+    static class ExampleSecurityConfigurerAdapter extends OAuth2SsoDefaultConfiguration {
+
+        public ExampleSecurityConfigurerAdapter(ApplicationContext applicationContext, OAuth2SsoProperties sso) {
+            super(applicationContext, sso);
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+
+            // In this example we allow anonymous access to the root index page
+            // this MUST be configured before calling super.configure
+            http.authorizeRequests().antMatchers("/").permitAll();
+
+            // calling super.configure locks everything else down
+            super.configure(http);
+            // after calling super, you can change the logout success url
+            http.logout().logoutSuccessUrl("/");
         }
     }
 
