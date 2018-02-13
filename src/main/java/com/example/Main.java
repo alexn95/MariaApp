@@ -48,7 +48,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @ComponentScan
 @SpringBootApplication
-@EnableOAuth2Sso
 public class Main {
 
     public static void main(String[] args) throws Exception {
