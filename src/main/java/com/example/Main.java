@@ -87,8 +87,7 @@ public class Main {
             // In this example we allow anonymous access to the root index page
             // this MUST be configured before calling super.configure
             http.authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .and().formLogin().loginPage("/login").permitAll();
+                    .antMatchers("/").permitAll();
 
             // calling super.configure locks everything else down
             super.configure(http);
