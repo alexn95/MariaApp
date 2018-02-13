@@ -46,6 +46,7 @@ import org.jscience.physics.amount.Amount;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+@EnableOAuth2Sso
 @ComponentScan
 @SpringBootApplication
 public class Main {
