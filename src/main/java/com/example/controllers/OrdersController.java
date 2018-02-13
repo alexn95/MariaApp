@@ -3,6 +3,8 @@ package com.example.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,16 +17,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
 
-@EnableOAuth2Sso
 @RestController
 @RequestMapping("/orders")
+
 public class OrdersController {
 
     @Autowired
     private DataSource dataSource;
 
+    @PreAuthorize("#oauth2.hasScope('orders')")
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView orders(ModelAndView modelAndView) {
+    public ModelAndView orders(ModelAndView modelAndView, OAuth2Authentication authentication) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM orders");
