@@ -34,6 +34,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -99,11 +100,16 @@ public class Main {
         }
     }
 
-    @RequestMapping("auth")
-    public ModelAndView auth(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("auth");
-        return modelAndView;
+    @Controller
+    public class ExampleController {
+        @RequestMapping("auth")
+        public ModelAndView auth(){
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("auth");
+            return modelAndView;
+        }
     }
+
+
 
 }
