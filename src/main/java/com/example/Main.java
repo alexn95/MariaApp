@@ -34,6 +34,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.sql.DataSource;
@@ -94,6 +97,13 @@ public class Main {
             // after calling super, you can change the logout success url
             http.logout().logoutSuccessUrl("/");
         }
+    }
+
+    @RequestMapping("auth")
+    public ModelAndView auth(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("auth");
+        return modelAndView;
     }
 
 }
