@@ -3,6 +3,7 @@ package com.example.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,7 +21,8 @@ public class OrdersController {
     @Autowired
     private DataSource dataSource;
 
-    public ModelAndView db(ModelAndView modelAndView) {
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView orders(ModelAndView modelAndView) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM orders");
@@ -40,7 +42,7 @@ public class OrdersController {
             }
             modelAndView = new ModelAndView();
             modelAndView.addObject("records", output);
-            modelAndView.setViewName("db");
+            modelAndView.setViewName("orders");
             return modelAndView;
         } catch (Exception e) {
             modelAndView.addObject("message", e.getMessage());
