@@ -102,6 +102,12 @@
       <artifactId>jackson-mapper-asl</artifactId>
       <version>1.5.3</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.okta.spring</groupId>
+      <artifactId>okta-spring-boot-starter</artifactId>
+      <version>0.2.0</version>
+    </dependency>
   </dependencies>
 
   <build>
