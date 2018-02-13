@@ -27,7 +27,7 @@ public class OrdersController {
 
     @PreAuthorize("#oauth2.hasScope('orders')")
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView orders(ModelAndView modelAndView, OAuth2Authentication authentication) {
+    public ModelAndView orders(ModelAndView modelAndView) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM orders");
