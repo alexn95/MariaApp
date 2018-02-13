@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @ComponentScan
 @SpringBootApplication
+@EnableOAuth2Sso
 public class Main {
 
     public static void main(String[] args) throws Exception {
