@@ -27,8 +27,10 @@ public class MainController {
     private DataSource dataSource;
 
     @RequestMapping(method = RequestMethod.GET)
-    String index() {
-        return "index";
+    ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        return modelAndView;
     }
 
     @RequestMapping(method = RequestMethod.POST)
