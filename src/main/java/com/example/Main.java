@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,91 +45,16 @@ import org.jscience.physics.amount.Amount;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-@Controller
+@ComponentScan
 @SpringBootApplication
 public class Main {
-
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
-
-    @Autowired
-    private DataSource dataSource;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
     }
 
-    @RequestMapping("/")
-    String index() {
-        return "index";
-    }
-
-    @RequestMapping(path = "/", method = RequestMethod.POST)
-    ModelAndView order(ModelAndView model,
-                 @RequestParam(value = "surname")String recipient_surname,
-                 @RequestParam(value = "name")String recipient_name,
-                 @RequestParam(value = "phone")String recipient_phone,
-                 @RequestParam(value = "note")String recipient_note) {
-        try (Connection connection = dataSource.getConnection()) {
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate("INSERT INTO orders(surname, name, phone, note, complete, createtime) VALUES ('" +
-                     recipient_surname + "', '" + recipient_name + "', '" + recipient_phone + "', '" +
-                    recipient_note + "', false, now())");
-            model = new ModelAndView(new MappingJackson2JsonView());
-            model.addObject("result", "success");
-            return model;
-        } catch (Exception e) {
-            model.addObject(e);
-            return model;
-        }
-    }
-
-
-    @RequestMapping("/db")
-    String db(Map<String, Object> model) {
-        try (Connection connection = dataSource.getConnection()) {
-            Statement stmt = connection.createStatement();
-//            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-//            stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-            ResultSet rs = stmt.executeQuery("SELECT * FROM orders");
-
-            ArrayList<String> output = new ArrayList<String>();
-            while (rs.next()) {
-                String order = rs.getString("surname");
-                order += ", ";
-                order += rs.getString("name");
-                order += ", ";
-                order += rs.getString("phone");
-                order += ", ";
-                order += rs.getString("note");
-                order += ", ";
-                order += rs.getTimestamp("createtime");
-                output.add("Заказ: " + order);
-            }
-
-            model.put("records", output);
-            return "db";
-        } catch (Exception e) {
-            model.put("message", e.getMessage());
-            return "error";
-        }
-    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    String testGet() {
-        return "test";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public ModelAndView testPost(ModelAndView model,
-                                  @RequestParam(value = "param1")String param){
-        model = new ModelAndView(new MappingJackson2JsonView());
-        model.addObject("attr1", param);
-        model.addObject("attr2", "hello");
-        return model;
-    }
-
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
 
     @Bean
     public DataSource dataSource() throws SQLException {
