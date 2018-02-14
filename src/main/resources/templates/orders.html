@@ -21,10 +21,12 @@
       <span th:text="${order.phone}"/>
       <span th:text="${order.note}"/>
       <span th:text="${order.createDate}"/>
-      <input th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
+      <input class="isComplete" th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
     </li>
   </ul>
 </div>
 
 </body>
+
+<script src="js/custom/order_complete_change.js"></script>
 </html>
