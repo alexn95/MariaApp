@@ -22,7 +22,7 @@
 <div class="container">
   <h1>Заказы:</h1>
   <div th:each="order : ${orders}" class="list-group">
-    <div class="list-group-item  flex-column align-items-start">
+    <div class="list-group-item  flex-column align-items-start list-group-item-secondary">
       <div class="d-flex w-100 justify-content-between">
         <p class="mb-1">Заказ № <span th:text="${order.id}"/> </p>
         <small class="text-muted"> <span th:text="${order.createDate}"/></small>
@@ -36,9 +36,8 @@
           <label th:for="${order.id}">Выполнен</label>
         </div>
       </div>
-
-    <div>
-  </div>
+    </div>
+</div>
 </div>
 
 </body>
