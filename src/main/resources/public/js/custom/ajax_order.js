@@ -9,9 +9,7 @@ $(document).ready(function () {
                var csrfToken = $("meta[name='_csrf']").attr("content");
                var csrfHeader = $("meta[name='_csrf_header']").attr("content");  // THIS WAS ADDED
                var data = {surname, name, phone, note};
-               var headers = {};
                data[csrfParameter] = csrfToken;
-               headers[csrfHeader] = csrfToken;
 
                $.ajax({
                    type:"POST",
