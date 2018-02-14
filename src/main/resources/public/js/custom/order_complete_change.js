@@ -4,7 +4,7 @@
                    var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
                    var csrfToken = $("meta[name='_csrf']").attr("content");
                    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
-                   var data;
+                   var data = {}
                    data[csrfParameter] = csrfToken;
                    data[id] = id;
                    data[isComplete] = isComplete;
