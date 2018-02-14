@@ -23,15 +23,18 @@
   <div th:each="order : ${orders}" class="list-group">
     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">Заказ № <span th:text="${order.id}"/> </h5>
+        <p class="mb-1">Заказ № <span th:text="${order.id}"/> </p>
         <small class="text-muted"> <span th:text="${order.createDate}"/></small>
       </div>
       <p class="mb-1"><span th:text="${order.surname}"/> <span th:text="${order.name}"/></p>
       <p class="mb-1"> <span th:text="${order.note}"/></p>
       <small class="text-muted"><span th:text="${order.phone}"/></small>
-      <label class="btn btn-success">
-        <input class="isComplete" th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
+      <label th:for="${order.id}" class="btn btn-success">
+        Выполнен
+        <input class="isComplete badgebox" th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
+        <span class="badge">&check;</span>
       </label>
+
     </a>
   </div>
 </div>
