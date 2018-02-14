@@ -34,9 +34,9 @@
         <p class="mb-1"><span th:text="${order.phone}"/></p>
 
         <div class="form-check">
-          <label class="checkbox-inline">
+          <label>
             <span class="label-text">Выполнен</span>
-            <input name="check" th:id="${order.id}" class="isComplete" type="checkbox" th:checked="${order.complete}" />
+            <input name="check" th:id="${order.id}" class="isComplete checkbox" type="checkbox" th:checked="${order.complete}" />
           </label>
         </div>
 
