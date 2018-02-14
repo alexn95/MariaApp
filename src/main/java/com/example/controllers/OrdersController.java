@@ -59,11 +59,12 @@ public class OrdersController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
     ModelAndView completeOrder(ModelAndView model,
-                               @RequestParam(value = "id")String id) {
+                               @RequestParam(value = "id")String id,
+                               @RequestParam(value = "isComplete")String isComplete) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
-//            String query = "update orders set complete = " + ;
-            ResultSet rs = stmt.executeQuery("update orders set complete = true where id = ;");
+            String query = "update orders set complete = " + isComplete + " where id = " + id + " ;";
+            stmt.executeQuery(query);
             model.addObject("result", "success");
             return model;
         } catch (Exception e) {
