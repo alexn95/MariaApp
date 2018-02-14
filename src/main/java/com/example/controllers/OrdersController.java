@@ -56,7 +56,7 @@ public class OrdersController {
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
     ModelAndView completeOrder(ModelAndView model,
                                @RequestParam(value = "id")String id,
