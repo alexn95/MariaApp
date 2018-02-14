@@ -36,7 +36,7 @@ public class OrdersController {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM orders order by createtime desc;");
             SimpleDateFormat format = new SimpleDateFormat("hh:mm dd-MM-yyyy ");
-            format.setTimeZone(TimeZone.getTimeZone("GMT-2"));
+            format.setTimeZone(TimeZone.getTimeZone("GMT+2"));
 
             ArrayList<Order> orders = new ArrayList<>();
             while (rs.next()) {
