@@ -72,38 +72,38 @@ public class Main {
     }
 
 
-    @EnableGlobalMethodSecurity(prePostEnabled = true)
-    protected static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
-        @Override
-        protected MethodSecurityExpressionHandler createExpressionHandler() {
-            return new OAuth2MethodSecurityExpressionHandler();
-        }
-    }
-
-
-    @Configuration
-    @EnableOAuth2Sso
-    static class ExampleSecurityConfigurerAdapter extends OAuth2SsoDefaultConfiguration {
-
-        public ExampleSecurityConfigurerAdapter(ApplicationContext applicationContext, OAuth2SsoProperties sso) {
-            super(applicationContext, sso);
-        }
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-
-            // In this example we allow anonymous access to the root index page
-            // this MUST be configured before calling super.configure
-            http.authorizeRequests()
-                    .antMatchers("/").permitAll();
-            
-
-            // calling super.configure locks everything else down
-            super.configure(http);
-            // after calling super, you can change the logout success url
-            http.logout().logoutSuccessUrl("/");
-        }
-    }
+//    @EnableGlobalMethodSecurity(prePostEnabled = true)
+//    protected static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+//        @Override
+//        protected MethodSecurityExpressionHandler createExpressionHandler() {
+//            return new OAuth2MethodSecurityExpressionHandler();
+//        }
+//    }
+//
+//
+//    @Configuration
+//    @EnableOAuth2Sso
+//    static class ExampleSecurityConfigurerAdapter extends OAuth2SsoDefaultConfiguration {
+//
+//        public ExampleSecurityConfigurerAdapter(ApplicationContext applicationContext, OAuth2SsoProperties sso) {
+//            super(applicationContext, sso);
+//        }
+//
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//
+//            // In this example we allow anonymous access to the root index page
+//            // this MUST be configured before calling super.configure
+//            http.authorizeRequests()
+//                    .antMatchers("/").permitAll();
+//
+//
+//            // calling super.configure locks everything else down
+//            super.configure(http);
+//            // after calling super, you can change the logout success url
+//            http.logout().logoutSuccessUrl("/");
+//        }
+//    }
 
 
 
