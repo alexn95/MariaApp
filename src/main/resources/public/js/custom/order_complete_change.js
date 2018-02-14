@@ -3,6 +3,9 @@
                $(this).change(function(info){
                     var id = $(this).attr('id');
                     var isComplete = false;
+                    if(this.checked) {
+                        isComplete = true;
+                    }
 
                     var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
                     var csrfToken = $("meta[name='_csrf']").attr("content");
@@ -14,12 +17,9 @@
                     data["isComplete"] = isComplete;
                     headers[csrfHeader] = csrfToken;
 
-                    if(this.checked) {
-                        isComplete = true;
-                    }
                     $.ajax({
                         type:"POST",
-                        headers: headers,
+
                         data: data,
                         url:"orders",
                         success: function(data){
