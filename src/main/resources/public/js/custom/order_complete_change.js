@@ -10,8 +10,8 @@
                     var data = {};
                     var headers = {};
                     data[csrfParameter] = csrfToken;
-                    data[id] = id;
-                    data[isComplete] = isComplete;
+                    data["id"] = id;
+                    data["isComplete"] = isComplete;
                     headers[csrfHeader] = csrfToken;
 
                     if(this.checked) {
