@@ -14,7 +14,8 @@
   <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
   <meta th:name="_csrf_parameter" th:content="${_csrf.parameterName}"/>
 
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <!--<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
   <link href="css/order_checkbox.css" rel="stylesheet">
 </head>
 <body>
@@ -22,7 +23,7 @@
 <div class="container">
   <h1>Заказы:</h1>
   <div th:each="order : ${orders}" class="list-group">
-    <div class="list-group-item  flex-column align-items-start list-group-item-secondary">
+    <div class="list-group-item  flex-column align-items-start list-group-item-primary">
       <div class="d-flex w-100 justify-content-between">
         <p class="mb-1">Заказ № <span th:text="${order.id}"/> </p>
         <small class="text-muted"> <span th:text="${order.createDate}"/></small>
@@ -44,5 +45,6 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="js/custom/order_complete_change.js"></script>
 
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!--<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>
