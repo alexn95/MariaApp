@@ -31,11 +31,10 @@
       <p class="mb-1"> <span th:text="${order.note}"/></p>
       <div class="d-flex w-100 justify-content-between">
         <p class="mb-1"><span th:text="${order.phone}"/></p>
-        <label th:for="${order.id}" class="btn btn-success">
-          Выполнен
+        <div class="funkyradio-success">
           <input class="isComplete badgebox" th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
-          <span class="badge">&check;</span>
-        </label>
+          <label th:for="${order.id}">Выполнен</label>
+        </div>
       </div>
 
     <div>
