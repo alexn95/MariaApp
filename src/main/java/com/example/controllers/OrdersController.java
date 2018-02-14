@@ -34,7 +34,7 @@ public class OrdersController {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM orders order by createtime desc;");
-            SimpleDateFormat format = new SimpleDateFormat("hh:mm dd-mm-yyyy ");
+            SimpleDateFormat format = new SimpleDateFormat("hh:mm dd-MM-yyyy ");
 
             ArrayList<Order> orders = new ArrayList<>();
             while (rs.next()) {
