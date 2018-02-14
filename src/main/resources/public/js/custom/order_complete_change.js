@@ -12,6 +12,7 @@
                         url:"orders",
                         success: function(data){
                              console.log(data);
+                             console.log("aasdasdf")
                         }
                     });
                });
