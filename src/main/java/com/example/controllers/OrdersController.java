@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/orders")
-@EnableOAuth2Sso
+//@EnableOAuth2Sso
 public class OrdersController {
 
     @Autowired
