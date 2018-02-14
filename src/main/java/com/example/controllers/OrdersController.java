@@ -66,7 +66,6 @@ public class OrdersController {
             String query = "update orders set complete = " + isComplete + " where id = " + id + " ;";
             stmt.executeQuery(query);
             model.addObject("result", "success");
-            model.setViewName("orders");
             return model;
         } catch (Exception e) {
             model.addObject(e);
