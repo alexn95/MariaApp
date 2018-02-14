@@ -16,8 +16,11 @@
 
 package com.example;
 
+import com.okta.spring.config.OktaOAuth2Properties;
+import com.okta.spring.oauth.OktaUserInfoTokenServices;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -25,15 +28,31 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2SsoDefaultConfiguration;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2SsoProperties;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +65,11 @@ import javax.sql.DataSource;
 import java.security.Principal;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.Filter;
+
 
 
 @RestController
@@ -53,6 +77,10 @@ import java.sql.SQLException;
 @ComponentScan
 @SpringBootApplication
 public class Main {
+
+    private final Logger logger = LoggerFactory.getLogger(Main.class);
+
+    private final OktaOAuth2Properties oktaOAuth2Properties;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
@@ -73,37 +101,89 @@ public class Main {
     }
 
 
-//    @EnableGlobalMethodSecurity(prePostEnabled = true)
-//    protected static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
-//        @Override
-//        protected MethodSecurityExpressionHandler createExpressionHandler() {
-//            return new OAuth2MethodSecurityExpressionHandler();
-//        }
-//    }
-//
-//
-//    @Configuration
-//    @EnableOAuth2Sso
-//    static class ExampleSecurityConfigurerAdapter extends OAuth2SsoDefaultConfiguration {
-//
-//        public ExampleSecurityConfigurerAdapter(ApplicationContext applicationContext, OAuth2SsoProperties sso) {
-//            super(applicationContext, sso);
-//        }
-//
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//
-//            // In this example we allow anonymous access to the root index page
-//            // this MUST be configured before calling super.configure
-//            http.authorizeRequests()
-//                    .antMatchers("/").permitAll();
-//
-//            // calling super.configure locks everything else down
-//            super.configure(http);
-//            // after calling super, you can change the logout success url
-//            http.logout().logoutSuccessUrl("/");
-//        }
-//    }
+
+    public Main(OktaOAuth2Properties oktaOAuth2Properties) {
+        this.oktaOAuth2Properties = oktaOAuth2Properties;
+    }
+
+
+    /**
+     * Enable the use of {@link org.springframework.security.access.prepost.PreAuthorize PreAuthorize} annotation
+     * and OAuth expressions like {code}#oauth2.hasScope('email'){code}.
+     */
+    @EnableGlobalMethodSecurity(prePostEnabled = true)
+    protected static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+        @Override
+        protected MethodSecurityExpressionHandler createExpressionHandler() {
+            return new OAuth2MethodSecurityExpressionHandler();
+        }
+    }
+
+    /**
+     * Create an ApplicationListener that listens for successful logins and simply just logs the principal name.
+     * @return a new listener
+     */
+    @Bean
+    protected ApplicationListener<AuthenticationSuccessEvent> authenticationSuccessEventApplicationListener() {
+        return event -> logger.info("Authentication Success with principal: {}", event.getAuthentication().getPrincipal());
+    }
+
+    @Bean
+    protected Filter oktaSsoFilter(ApplicationEventPublisher applicationEventPublisher,
+                                   OAuth2ClientContext oauth2ClientContext,
+                                   PrincipalExtractor principalExtractor,
+                                   AuthoritiesExtractor authoritiesExtractor,
+                                   AuthorizationCodeResourceDetails authorizationCodeResourceDetails,
+                                   ResourceServerProperties resourceServerProperties) {
+
+        // There are a few package private classes the configure a OAuth2ClientAuthenticationProcessingFilter, in order
+        // to change how the login redirect works we need to copy a bit of that code here
+        OAuth2ClientAuthenticationProcessingFilter oktaFilter = new OAuth2ClientAuthenticationProcessingFilter(oktaOAuth2Properties.getRedirectUri());
+        oktaFilter.setApplicationEventPublisher(applicationEventPublisher);
+        OAuth2RestTemplate oktaTemplate = new OAuth2RestTemplate(authorizationCodeResourceDetails, oauth2ClientContext);
+        oktaFilter.setRestTemplate(oktaTemplate);
+        UserInfoTokenServices tokenServices = new OktaUserInfoTokenServices(resourceServerProperties.getUserInfoUri(), authorizationCodeResourceDetails.getClientId(), oauth2ClientContext);
+        tokenServices.setRestTemplate(oktaTemplate);
+        tokenServices.setPrincipalExtractor(principalExtractor);
+        tokenServices.setAuthoritiesExtractor(authoritiesExtractor);
+        oktaFilter.setTokenServices(tokenServices);
+        return oktaFilter;
+    }
+
+    @Configuration
+    static class OAuth2SecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+        private final Filter oktaSsoFilter;
+
+        private final OktaOAuth2Properties oktaOAuth2Properties;
+
+        OAuth2SecurityConfigurerAdapter(Filter oktaSsoFilter, OktaOAuth2Properties oktaOAuth2Properties) {
+            this.oktaSsoFilter = oktaSsoFilter;
+            this.oktaOAuth2Properties = oktaOAuth2Properties;
+        }
+
+        @Bean
+        protected AuthenticationEntryPoint authenticationEntryPoint() {
+            return new LoginUrlAuthenticationEntryPoint(oktaOAuth2Properties.getRedirectUri());
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    // allow anonymous users to access the root page
+                    .authorizeRequests().antMatchers("/").permitAll()
+                    .and()
+                    // add our SSO Filter in place
+                    .addFilterAfter(oktaSsoFilter, AbstractPreAuthenticatedProcessingFilter.class)
+                    .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
+                    .and()
+                    .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, oktaOAuth2Properties.getRedirectUri()).authenticated()
+                    .and()
+                    // send the user back to the root page when they logout
+                    .logout().logoutSuccessUrl("/");
+        }
+    }
 
 
 
