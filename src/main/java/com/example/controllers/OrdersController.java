@@ -59,7 +59,7 @@ public class OrdersController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
     ModelAndView completeOrder(ModelAndView model,
-                               @RequestParam(value = "id")String id,
+                               @RequestParam(value = "id")int id,
                                @RequestParam(value = "isComplete")String isComplete) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
