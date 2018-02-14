@@ -32,9 +32,18 @@
       <p class="mb-1"> <span th:text="${order.note}"/></p>
       <div class="d-flex w-100 justify-content-between">
         <p class="mb-1"><span th:text="${order.phone}"/></p>
-        <div class="funkyradio-success">
-          <input class="isComplete badgebox" th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
-          <label th:for="${order.id}">Выполнен</label>
+        <div class="[ form-group ]">
+          <input th:id="${order.id}" class="isComplete" type="checkbox" name="fancy-checkbox-success"
+                 th:checked="${order.complete}" id="fancy-checkbox-success" autocomplete="off" />
+          <div class="[ btn-group ]">
+            <label for="fancy-checkbox-success" class="[ btn btn-success ]">
+              <span class="[ glyphicon glyphicon-ok ]"></span>
+              <span> </span>
+            </label>
+            <label for="fancy-checkbox-success" class="[ btn btn-default active ]">
+              Выполнен
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -43,7 +52,7 @@
 
 </body>
   <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="js/custom/order_complete_change.js"></script>
+  <script src="js/custom/orders.js"></script>
 
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
