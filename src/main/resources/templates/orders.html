@@ -14,7 +14,13 @@
 <div class="container">
   <h1>Заказы:</h1>
   <ul th:each="order : ${orders}">
-    <li th:text="${order.id}"/>
+    <li>
+      <span th:text="${order.id}"/>
+      <span th:text="${order.surname}"/>
+      <span th:text="${order.name}"/>
+      <span th:text="${order.phone}"/>
+      <span th:text="${order.note}"/>
+    </li>
   </ul>
 </div>
 
