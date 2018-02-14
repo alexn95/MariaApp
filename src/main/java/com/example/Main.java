@@ -49,7 +49,7 @@ import java.sql.SQLException;
 
 
 @RestController
-@EnableOAuth2Sso
+//@EnableOAuth2Sso
 @ComponentScan
 @SpringBootApplication
 public class Main {

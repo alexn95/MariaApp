@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
+@EnableOAuth2Sso
 @RequestMapping("/orders")
 public class OrdersController {
 
