@@ -18,17 +18,18 @@
 
 <div class="container">
   <h1>Заказы:</h1>
-  <ul th:each="order : ${orders}">
-    <li>
-      Заказ № <span  th:text="${order.id}"/>:
-      <span th:text="${order.surname}"/>
-      <span th:text="${order.name}"/>
-      <span th:text="${order.phone}"/>
-      <span th:text="${order.note}"/>
-      <span th:text="${order.createDate}"/>
+  <div th:each="order : ${orders}" class="list-group">
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">Заказ № <span th:text="${order.id}"/> </h5>
+        <small class="text-muted"> <span th:text="${order.createDate}"/></small>
+      </div>
+      <p class="mb-1"><span th:text="${order.surname}"/> <span th:text="${order.name}"/></p>
+      <p class="mb-1"> <span th:text="${order.note}"/></p>
+      <small class="text-muted"><span th:text="${order.phone}"/></small>
       <input class="isComplete" th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
-    </li>
-  </ul>
+    </a>
+  </div>
 </div>
 
 </body>
