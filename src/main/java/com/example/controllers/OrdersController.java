@@ -19,13 +19,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/orders")
-//@EnableOAuth2Sso
 public class OrdersController {
 
     @Autowired
     private DataSource dataSource;
 
-//    @PreAuthorize("#oauth2.hasScope('orders')")
+    @PreAuthorize("#oauth2.hasScope('orders')")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView orders(ModelAndView modelAndView) {
         try (Connection connection = dataSource.getConnection()) {

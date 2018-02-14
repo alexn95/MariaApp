@@ -49,6 +49,7 @@ import java.sql.SQLException;
 
 
 @RestController
+@EnableOAuth2Sso
 @ComponentScan
 @SpringBootApplication
 public class Main {
@@ -79,8 +80,8 @@ public class Main {
 //            return new OAuth2MethodSecurityExpressionHandler();
 //        }
 //    }
-//
-//
+
+
 //    @Configuration
 //    @EnableOAuth2Sso
 //    static class ExampleSecurityConfigurerAdapter extends OAuth2SsoDefaultConfiguration {
@@ -95,8 +96,7 @@ public class Main {
 //            // In this example we allow anonymous access to the root index page
 //            // this MUST be configured before calling super.configure
 //            http.authorizeRequests()
-//                    .antMatchers("/").permitAll();
-//
+//                    .antMatchers("/", "auth").permitAll();
 //
 //            // calling super.configure locks everything else down
 //            super.configure(http);
