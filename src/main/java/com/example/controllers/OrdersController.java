@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ public class OrdersController {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM orders order by createtime desc;");
+            SimpleDateFormat format = new SimpleDateFormat("hh:mm dd-mm-yyyy ");
 
             ArrayList<Order> orders = new ArrayList<>();
             while (rs.next()) {
@@ -43,7 +45,7 @@ public class OrdersController {
                 order.setPhone(rs.getString("phone"));
                 order.setNote(rs.getString("note"));
                 order.setComplete(rs.getBoolean("complete"));
-                order.setCreateDate(rs.getTimestamp("createtime"));
+                order.setCreateDate(format.format(rs.getTimestamp("createtime")));
                 orders.add(order);
             }
             modelAndView = new ModelAndView();

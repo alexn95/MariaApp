@@ -9,10 +9,10 @@ public class Order {
     private String name;
     private String phone;
     private String note;
-    private Timestamp createDate;
+    private String createDate;
     private boolean isComplete;
 
-    public Order(int id, String surname, String name, String phone, String note, Timestamp createDate, boolean isComplete) {
+    public Order(int id, String surname, String name, String phone, String note, String createDate, boolean isComplete) {
         this.id = id;
         this.surname = surname;
         this.name = name;
@@ -41,7 +41,7 @@ public class Order {
         this.phone = phone;
     }
 
-    public void setCreateDate(Timestamp createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
@@ -65,7 +65,7 @@ public class Order {
         return phone;
     }
 
-    public Timestamp getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
