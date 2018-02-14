@@ -23,7 +23,8 @@
 <div class="container">
   <h2 class="order_header">Заказы:</h2>
   <div th:each="order : ${orders}" class="list-group">
-    <div class="list-group-item  flex-column align-items-start " th:classappend="${order.complete} ? list-group-item-dark >
+    <div class="align-items-start list-group-item  flex-column"
+         th:classappend="${order.complete} ? list-group-item-dark : list-group-item-light >
       <div class="d-flex w-100 justify-content-between">
         <p class="mb-1">Заказ № <span th:text="${order.id}"/> </p>
         <small class="text-muted"> <span th:text="${order.createDate}"/></small>
