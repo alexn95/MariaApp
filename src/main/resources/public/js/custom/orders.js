@@ -1,12 +1,13 @@
     $(document).ready(function () {
            $('.isComplete:checkbox').each(function () {
                $(this).change(function(info){
-
-
                     var id = $(this).attr('id');
+
+                    $('#order-container-' + id).removeClass("list-group-item-dark")
                     var isComplete = false;
                     if(this.checked) {
                         isComplete = true;
+                        $('#order-container-' + id).addClass("list-group-item-dark");
                     }
 
                     var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
