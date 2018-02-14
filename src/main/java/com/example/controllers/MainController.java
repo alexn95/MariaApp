@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -26,6 +27,7 @@ public class MainController {
     @Autowired
     private DataSource dataSource;
 
+    @PreAuthorize("permitAll")
     @RequestMapping(method = RequestMethod.GET)
     ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView();
@@ -33,6 +35,7 @@ public class MainController {
         return modelAndView;
     }
 
+    @PreAuthorize("permitAll")
     @RequestMapping(method = RequestMethod.POST)
     ModelAndView order(ModelAndView model,
                        @RequestParam(value = "surname")String recipient_surname,

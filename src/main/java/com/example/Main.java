@@ -49,7 +49,7 @@ import java.sql.SQLException;
 
 
 @RestController
-//@EnableOAuth2Sso
+@EnableOAuth2Sso
 @ComponentScan
 @SpringBootApplication
 public class Main {
@@ -80,8 +80,8 @@ public class Main {
 //            return new OAuth2MethodSecurityExpressionHandler();
 //        }
 //    }
-
-
+//
+//
 //    @Configuration
 //    @EnableOAuth2Sso
 //    static class ExampleSecurityConfigurerAdapter extends OAuth2SsoDefaultConfiguration {
