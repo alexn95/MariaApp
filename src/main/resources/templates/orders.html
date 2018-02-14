@@ -16,14 +16,14 @@
 
   <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!--<link href="css/orders.css" rel="stylesheet">-->
+  <link href="css/orders.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
   <h2>Заказы:</h2>
   <div th:each="order : ${orders}" class="list-group">
-    <div class="list-group-item  flex-column align-items-start list-group-item-primary">
+    <div class="list-group-item  flex-column align-items-start list-group-item-success">
       <div class="d-flex w-100 justify-content-between">
         <p class="mb-1">Заказ № <span th:text="${order.id}"/> </p>
         <small class="text-muted"> <span th:text="${order.createDate}"/></small>
