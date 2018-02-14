@@ -33,9 +33,12 @@
       <div class="d-flex w-100 justify-content-between">
         <p class="mb-1"><span th:text="${order.phone}"/></p>
 
-          <input th:id="${order.id}" class="isComplete" type="checkbox"
-                 th:checked="${order.complete}"  />
-              Выполнен
+        <div class="form-check">
+          <label>
+            <input name="check" th:id="${order.id}" class="isComplete" type="checkbox"
+                   th:checked="${order.complete}" /> <span class="label-text">Выполнен</span>
+          </label>
+        </div>
 
       </div>
       </div>
