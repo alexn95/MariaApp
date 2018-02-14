@@ -32,7 +32,7 @@ public class OrdersController {
     public ModelAndView orders(ModelAndView modelAndView) {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM orders sort by createtime");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM orders order by createtime desc;");
 
             ArrayList<Order> orders = new ArrayList<>();
             while (rs.next()) {
