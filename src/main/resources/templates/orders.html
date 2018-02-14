@@ -15,13 +15,13 @@
   <h1>Заказы:</h1>
   <ul th:each="order : ${orders}">
     <li>
-      Заказ № <span th:text="${order.id}"/>:
+      Заказ № <span  th:text="${order.id}"/>:
       <span th:text="${order.surname}"/>
       <span th:text="${order.name}"/>
       <span th:text="${order.phone}"/>
       <span th:text="${order.note}"/>
       <span th:text="${order.createDate}"/>
-      <span th:text="${order.complete}"/>
+      <input th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
     </li>
   </ul>
 </div>
