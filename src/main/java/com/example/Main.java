@@ -96,6 +96,7 @@ public class Main {
             // this MUST be configured before calling super.configure
             http.authorizeRequests()
                     .antMatchers("/").permitAll();
+            
 
             // calling super.configure locks everything else down
             super.configure(http);
