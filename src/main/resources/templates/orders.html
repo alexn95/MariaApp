@@ -16,7 +16,7 @@
 
   <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/order_checkbox.css" rel="stylesheet">
+  <link href="css/orders.css" rel="stylesheet">
 </head>
 <body>
 
@@ -35,7 +35,7 @@
 
         <div class="form-check">
           <label>
-            <span class="mb-1" class="label-text">Выполнен</span>
+            Выполнен
             <input name="check" th:id="${order.id}" class="isComplete" type="checkbox"
                    th:checked="${order.complete}" />
           </label>
