@@ -25,6 +25,7 @@ public class OrdersController {
     private DataSource dataSource;
 
 //    @PreAuthorize("#oauth2.hasScope('orders')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView orders(ModelAndView modelAndView) {
         try (Connection connection = dataSource.getConnection()) {
