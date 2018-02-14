@@ -65,6 +65,7 @@ public class OrdersController {
             Statement stmt = connection.createStatement();
             String query = "update orders set complete = " + isComplete + " where id = " + id + " ;";
             stmt.executeQuery(query);
+            model.addObject(query);
             model.addObject("result", "success");
             return model;
         } catch (Exception e) {
