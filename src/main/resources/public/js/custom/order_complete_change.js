@@ -1,19 +1,17 @@
     $(document).ready(function () {
            $('.isComplete:checkbox').each(function () {
-               $(this).change(function(){
+               $(this).change(function(info){
                     var id = $(this).attr('id');
-                    console.log(id);
+//                    $.ajax({
+//                        type:"POST",
+//                        data:{id, },
+//                        url:"orders",
+//                        success: function(data){
+//                             console.log(data);
+//                        }
+//                    });
+                     console.log(info);
                });
-//               $.ajax({
-//                   type:"POST",
-//                   data:{surname, name, phone, note},
-//                   url:"",
-//                   success: function(data){
-//                       console.log(data);
-//                       $('#orderModal').modal("hide");
-//                       $('#resultOrderModal').modal("show");
-//                   }
-//               });
 
            });
         });
