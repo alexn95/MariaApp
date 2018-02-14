@@ -4,6 +4,7 @@ import com.okta.spring.config.OktaClientProperties;
 import com.okta.spring.config.OktaOAuth2Properties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,7 +27,7 @@ public class LoginController {
         this.oktaClientProperties = oktaClientProperties;
     }
 
-    @GetMapping(value = "/login")
+    @RequestMapping("/login")
     public ModelAndView login(@RequestParam("state") String state) {
         ModelAndView mav = new ModelAndView("login");
         mav.addObject(STATE, state);
@@ -38,7 +39,7 @@ public class LoginController {
         return mav;
     }
 
-    @GetMapping("/logout")
+    @RequestMapping("/logout")
     public String logout() {
         return "logout";
     }

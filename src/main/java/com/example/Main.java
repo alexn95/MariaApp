@@ -72,10 +72,6 @@ public class Main {
         }
     }
 
-    @GetMapping("/")
-    public String echoTheUsersEmailAddress(Principal principal) {
-        return "Hey there! Your email address is: " + principal.getName();
-    }
 
 //    @EnableGlobalMethodSecurity(prePostEnabled = true)
 //    protected static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
