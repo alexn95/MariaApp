@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.entities.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
@@ -7,8 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -24,7 +27,6 @@ public class OrdersController {
     @Autowired
     private DataSource dataSource;
 
-//    @PreAuthorize("#oauth2.hasScope('orders')")
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView orders(ModelAndView modelAndView) {
@@ -32,26 +34,38 @@ public class OrdersController {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM orders");
 
-            ArrayList<String> output = new ArrayList<String>();
+            ArrayList<Order> orders = new ArrayList<>();
             while (rs.next()) {
-                String order = rs.getString("surname");
-                order += ", ";
-                order += rs.getString("name");
-                order += ", ";
-                order += rs.getString("phone");
-                order += ", ";
-                order += rs.getString("note");
-                order += ", ";
-                order += rs.getTimestamp("createtime");
-                output.add("Заказ: " + order);
+                Order order = new Order();
+                order.setId(rs.getInt("id"));
+                order.setSurname(rs.getString("surname"));
+                order.setName(rs.getString("name"));
+                order.setPhone(rs.getString("phone"));
+                order.setNote(rs.getString("note"));
+                order.setComplete(rs.getBoolean("complete"));
+                order.setCreateDate(rs.getTimestamp("createtime"));
+                orders.add(order);
             }
             modelAndView = new ModelAndView();
-            modelAndView.addObject("records", output);
+            modelAndView.addObject("orders", orders);
             modelAndView.setViewName("orders");
             return modelAndView;
         } catch (Exception e) {
             modelAndView.addObject("message", e.getMessage());
             return modelAndView;
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(method = RequestMethod.POST)
+    ModelAndView completeOrder(ModelAndView model) {
+        try (Connection connection = dataSource.getConnection()) {
+
+            model.addObject("result", "success");
+            return model;
+        } catch (Exception e) {
+            model.addObject(e);
+            return model;
         }
     }
 }
