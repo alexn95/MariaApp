@@ -13,6 +13,8 @@
   <meta th:name="_csrf" th:content="${_csrf.token}"/>
   <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
   <meta th:name="_csrf_parameter" th:content="${_csrf.parameterName}"/>
+
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -27,7 +29,9 @@
       <p class="mb-1"><span th:text="${order.surname}"/> <span th:text="${order.name}"/></p>
       <p class="mb-1"> <span th:text="${order.note}"/></p>
       <small class="text-muted"><span th:text="${order.phone}"/></small>
-      <input class="isComplete" th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
+      <label class="btn btn-success">
+        <input class="isComplete" th:id="${order.id}" type="checkbox" name="complete" th:checked="${order.complete}" />
+      </label>
     </a>
   </div>
 </div>
@@ -36,4 +40,5 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="js/custom/order_complete_change.js"></script>
 
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </html>
