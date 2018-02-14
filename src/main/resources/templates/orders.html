@@ -21,11 +21,11 @@
 <body>
 
 <div class="container">
-  <h2>Заказы:</h2>
+  <h2 class="order_header">Заказы:</h2>
   <div th:each="order : ${orders}" class="list-group">
-    <div class="list-group-item  flex-column align-items-start list-group-item-warnin">
+    <div class="list-group-item  flex-column align-items-start " th:classappend="${order.complete} ? list-group-item-dark >
       <div class="d-flex w-100 justify-content-between">
-        <p class="order_header mb-1">Заказ № <span th:text="${order.id}"/> </p>
+        <p class="mb-1">Заказ № <span th:text="${order.id}"/> </p>
         <small class="text-muted"> <span th:text="${order.createDate}"/></small>
       </div>
       <p class="mb-1"><span th:text="${order.surname}"/> <span th:text="${order.name}"/></p>
