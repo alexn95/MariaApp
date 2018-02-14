@@ -3,16 +3,27 @@
                $(this).change(function(info){
                     var id = $(this).attr('id');
                     var isComplete = false;
+
+                    var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
+                    var csrfToken = $("meta[name='_csrf']").attr("content");
+                    var csrfHeader = $("meta[name='_csrf_header']").attr("content");  // THIS WAS ADDED
+                    var data = {};
+                    var headers = {};
+                    data[csrfParameter] = csrfToken;
+                    data[id] = id;
+                    data[isComplete] = isComplete;
+                    headers[csrfHeader] = csrfToken;
+
                     if(this.checked) {
                         isComplete = true;
                     }
                     $.ajax({
                         type:"POST",
-                        data:{id, isComplete},
+                        headers: headers,
+                        data: data,
                         url:"orders",
                         success: function(data){
                              console.log(data);
-                             console.log("aasdasdf")
                         }
                     });
                });
